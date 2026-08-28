@@ -1,1002 +1,708 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Hexo Theme Redefine">
-    
-    <meta name="author" content="Chloe">
-    
-    <!-- Completely eliminate flash of wrong theme -->
-    <script>
-        (function() {
-            const THEME_KEY = "REDEFINE-THEME-STATUS";
-            const DARK = "dark", LIGHT = "light";
-            
-            // Get preferred theme
-            function getTheme() {
-                try {
-                    const saved = localStorage.getItem(THEME_KEY);
-                    if (saved) {
-                        const { isDark } = JSON.parse(saved);
-                        return isDark ? DARK : LIGHT;
-                    }
-                } catch (e) {}
-                
-                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
-            }
-            
-            // Apply theme to document
-            function applyTheme(theme) {
-                const isDark = theme === DARK;
-                const root = document.documentElement;
-                
-                // Set data attribute for CSS variables
-                root.setAttribute("data-theme", theme);
-                
-                // Set classes for compatibility
-                root.classList.add(theme);
-                root.classList.remove(isDark ? LIGHT : DARK);
-                root.style.colorScheme = theme;
-            }
-            
-            // Initial application
-            const theme = getTheme();
-            applyTheme(theme);
-            
-            // Listen for system preference changes
-            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-                // Only update if using system preference (no localStorage entry)
-                if (!localStorage.getItem(THEME_KEY)) {
-                    applyTheme(matches ? DARK : LIGHT);
-                }
-            });
-            
-            // Set body classes once DOM is ready
-            if (document.readyState !== "loading") {
-                document.body.classList.add(theme + "-mode");
-            } else {
-                document.addEventListener("DOMContentLoaded", () => {
-                    document.body.classList.add(theme + "-mode");
-                    document.body.classList.remove((theme === DARK ? LIGHT : DARK) + "-mode");
-                });
-            }
-        })();
-    </script>
-    
-    <!-- Critical CSS to prevent flash -->
-    <style>
-        :root[data-theme="dark"] {
-            --background-color: #202124;
-            --background-color-transparent: rgba(32, 33, 36, 0.6);
-            --second-background-color: #2d2e32;
-            --third-background-color: #34353a;
-            --third-background-color-transparent: rgba(32, 33, 36, 0.6);
-            --primary-color: #0066CC;
-            --first-text-color: #ffffff;
-            --second-text-color: #eeeeee;
-            --third-text-color: #bebec6;
-            --fourth-text-color: #999999;
-            --default-text-color: #bebec6;
-            --invert-text-color: #373D3F;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --selection-color: #0066CC;
-            --shadow-color-1: rgba(255, 255, 255, 0.08);
-            --shadow-color-2: rgba(255, 255, 255, 0.05);
-        }
-        
-        :root[data-theme="light"] {
-            --background-color: #fff;
-            --background-color-transparent: rgba(255, 255, 255, 0.6);
-            --second-background-color: #f8f8f8;
-            --third-background-color: #f2f2f2;
-            --third-background-color-transparent: rgba(241, 241, 241, 0.6);
-            --primary-color: #0066CC;
-            --first-text-color: #16171a;
-            --second-text-color: #2f3037;
-            --third-text-color: #5e5e5e;
-            --fourth-text-color: #eeeeee;
-            --default-text-color: #373D3F;
-            --invert-text-color: #bebec6;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --selection-color: #0066CC;
-            --shadow-color-1: rgba(0, 0, 0, 0.08);
-            --shadow-color-2: rgba(0, 0, 0, 0.05);
-        }
-        
-        body {
-            background-color: var(--background-color);
-            color: var(--default-text-color);
-        }
-        
-        /* Apply body classes as soon as DOM is ready */
-        :root[data-theme="dark"] body {
-            background-color: var(--background-color);
-            color: var(--default-text-color);
-        }
-    </style>
-    
-    <!-- preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    
-    <!--- Seo Part-->
-    
-    <link rel="canonical" href="http://example.com/"/>
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
-    <meta name="revisit-after" content="1 days">
-    
-    
-    
-        
-        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/redefine-og.webp">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
-    
-    
-    <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
-    <meta name="theme-color" content="#A31F34">
-    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
-    <!--- Page Info-->
-    
-    <title>
-        
-            Chloe&#39;s Cabin - Chloe&#39;s Learning Journey.
-        
-    </title>
+  <title>Chenge Li | Zhejiang University</title>
+  <meta name="description" content="Academic homepage of Chenge Li, an undergraduate student in Robotics Engineering at Zhejiang University working on computer vision and generative models.">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Chenge Li | Zhejiang University">
+  <meta property="og:description" content="Undergraduate researcher in computer vision, generative models, visual tokenization, and robotics.">
 
-    
-<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+  <style>
+    :root {
+      --paper: #f7f5ef;
+      --surface: #fffef9;
+      --ink: #19221d;
+      --muted: #5e6a63;
+      --accent: #185b45;
+      --accent-strong: #104432;
+      --accent-soft: #dce9e1;
+      --line: #d8ddd6;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --content: 1080px;
+    }
 
+    * {
+      box-sizing: border-box;
+    }
 
-    <!--- Inject Part-->
-    
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5.5rem;
+    }
 
-    
-<link rel="stylesheet" href="/css/style.css">
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 88% 5%, rgba(24, 91, 69, 0.08), transparent 30rem),
+        var(--paper);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
 
-    
-        
-<link rel="stylesheet" href="/css/build/tailwind.css">
+    a:hover {
+      color: var(--accent-strong);
+    }
 
-    
+    a:focus-visible {
+      outline: 3px solid rgba(24, 91, 69, 0.25);
+      outline-offset: 4px;
+      border-radius: 3px;
+    }
 
-    
-<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 100;
+      padding: 0.55rem 0.8rem;
+      color: white;
+      background: var(--accent-strong);
+      transform: translateY(-180%);
+      transition: transform 160ms ease;
+    }
 
-    
-<link rel="stylesheet" href="/fonts/Geist/geist.css">
+    .skip-link:focus {
+      transform: translateY(0);
+    }
 
-    <!--- Font Part-->
-    
-    
-    
-    
-    
-    
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(216, 221, 214, 0.85);
+      background: rgba(247, 245, 239, 0.92);
+      backdrop-filter: blur(12px);
+    }
 
-    <script id="hexo-configurations">
-    window.config = {"hostname":"example.com","root":"/","language":"en"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Chloe's Cabin","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Notes":{"path":"/bookmarks/","icon":"fa-regular fa-lightbulb"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Notes":{"path":"/bookmarks/","icon":"fa-regular fa-lightbulb"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
-    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
-    window.data = {"masonry":false};
-  </script>
-    
-    <!--- Fontawesome Part-->
-    
-<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+    .nav {
+      width: min(calc(100% - 2rem), var(--content));
+      min-height: 4.5rem;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
 
-    
-<link rel="stylesheet" href="/fontawesome/brands.min.css">
+    .brand {
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
-    
-<link rel="stylesheet" href="/fontawesome/solid.min.css">
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.88rem;
+    }
 
-    
-<link rel="stylesheet" href="/fontawesome/regular.min.css">
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
 
-    
-    
-    
-    
-<meta name="generator" content="Hexo 8.1.1"></head>
+    .nav-links a:hover {
+      color: var(--accent);
+    }
 
+    main,
+    footer {
+      width: min(calc(100% - 2rem), var(--content));
+      margin-inline: auto;
+    }
 
+    .hero {
+      min-height: 34rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 0.75fr);
+      align-items: center;
+      gap: clamp(2rem, 7vw, 6rem);
+      padding: clamp(5rem, 10vw, 8rem) 0 4.5rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      font-family: var(--serif);
+      line-height: 1.14;
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin-bottom: 1.25rem;
+      font-size: clamp(3.25rem, 8vw, 6.4rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin-bottom: 0.45rem;
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    .hero-summary {
+      max-width: 43rem;
+      margin: 0 0 1.75rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .hero-summary strong {
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.7rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 0.4rem;
+      color: var(--ink);
+      background: rgba(255, 254, 249, 0.72);
+      font-size: 0.88rem;
+      font-weight: 650;
+      text-decoration: none;
+      transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      color: white;
+      background: var(--accent);
+    }
+
+    .button.primary:hover {
+      border-color: var(--accent-strong);
+      color: white;
+      background: var(--accent-strong);
+    }
+
+    .fact-card {
+      position: relative;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 0.65rem;
+      background: rgba(255, 254, 249, 0.72);
+      box-shadow: 0 18px 45px rgba(25, 34, 29, 0.05);
+    }
+
+    .fact-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 1.5rem;
+      width: 3.5rem;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .facts {
+      display: grid;
+      gap: 1.1rem;
+      margin: 0;
+    }
+
+    .facts div {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .facts div:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .facts dt {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .facts dd {
+      margin: 0.2rem 0 0;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    section:not(.hero) {
+      display: grid;
+      grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1.3fr);
+      gap: clamp(2rem, 7vw, 6rem);
+      padding: clamp(4.25rem, 8vw, 7rem) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-label {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+
+    .section-label p {
+      max-width: 16rem;
+      margin: -1rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .body-copy {
+      max-width: 47rem;
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .body-copy strong {
+      color: var(--ink);
+    }
+
+    .interest-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: 1.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .interest-list li {
+      padding: 0.42rem 0.75rem;
+      border: 1px solid #c4d5cb;
+      border-radius: 999px;
+      color: var(--accent-strong);
+      background: var(--accent-soft);
+      font-size: 0.85rem;
+      font-weight: 650;
+    }
+
+    .project-card {
+      padding: clamp(1.35rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: 0.65rem;
+      background: var(--surface);
+      box-shadow: 0 16px 40px rgba(25, 34, 29, 0.04);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status::before {
+      content: "";
+      width: 0.48rem;
+      height: 0.48rem;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(24, 91, 69, 0.1);
+    }
+
+    .project-meta {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .project-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-note {
+      margin-top: 1.1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .timeline,
+    .honors-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li,
+    .honors-list li {
+      display: grid;
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 1.5rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline li:first-child,
+    .honors-list li:first-child {
+      padding-top: 0;
+    }
+
+    .timeline li:last-child,
+    .honors-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .timeline time,
+    .honor-year {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 650;
+    }
+
+    .timeline p,
+    .honors-list p {
+      margin: 0.3rem 0 0;
+      color: var(--muted);
+    }
+
+    .contact-panel {
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border-radius: 0.65rem;
+      color: white;
+      background: var(--accent-strong);
+    }
+
+    .contact-panel h3 {
+      font-size: clamp(1.6rem, 3vw, 2.15rem);
+    }
+
+    .contact-panel p {
+      max-width: 39rem;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .contact-panel a {
+      color: white;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 2rem 0 2.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 780px) {
+      .nav {
+        min-height: 4rem;
+      }
+
+      .nav-links li:not(:first-child):not(:last-child) {
+        display: none;
+      }
+
+      .hero {
+        min-height: 0;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding-top: 5rem;
+      }
+
+      h1 {
+        font-size: clamp(3.1rem, 16vw, 5rem);
+      }
+
+      section:not(.hero) {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .section-label {
+        position: static;
+      }
+
+      .section-label p {
+        max-width: 32rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      main,
+      footer,
+      .nav {
+        width: min(calc(100% - 1.35rem), var(--content));
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+      }
+
+      .timeline li,
+      .honors-list li {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .link-row,
+      .skip-link {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      section:not(.hero) {
+        grid-template-columns: 12rem 1fr;
+        break-inside: avoid;
+        padding: 2rem 0;
+      }
+
+      .section-label {
+        position: static;
+      }
+
+      .hero {
+        min-height: 0;
+        padding: 2rem 0;
+      }
+
+      .project-card,
+      .fact-card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
 
 <body>
-	<div class="progress-bar-container">
-	
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-	
-	<span class="pjax-progress-bar"></span>
-	<!--        <span class="swup-progress-icon">-->
-	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
-	<!--        </span>-->
-	
-</div>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top">Chenge Li</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="#honors">Honors</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main class="page-container" id="swup">
-
-	
-	
-    <style>
-        .home-banner-container {
-            background: none !important;
-        }
-        .home-article-item,
-        .sidebar-links,
-        .sidebar-content,
-        a.page-number,
-        a.extend,
-        .sidebar-links .links:hover,
-        .right-bottom-tools,
-        footer.footer {
-            background-color: var(--background-color-transparent-80) !important;
-        }
-        .right-bottom-tools:hover,
-        a.page-number:hover,
-        a.extend:hover {
-            background-color: var(--primary-color) !important;
-        }
-        .site-info,
-        .home-article-sticky-label {
-            background-color: var(--background-color-transparent-15) !important;
-        }
-        .home-article-sticky-label {
-            backdrop-filter: none !important;
-        }
-    </style>
-    <div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
-        <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
-        <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
-    </div>
-
-
-<div class="home-banner-container flex justify-center items-center transition-fade relative">
-    
-    <div class="content mt-8 flex flex-col justify-center items-center transition-fade-down">
-        <div class="description flex flex-col justify-center items-center w-screen font-medium text-center"
-        
-        >
-            Chloe's Cabin
-            
-            
-                <p><i id="subtitle"></i></p>
-            
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Undergraduate Researcher · Zhejiang University</p>
+        <h1 id="page-title">Chenge Li</h1>
+        <p class="hero-summary">
+          Robotics Engineering undergraduate at <strong>Zhejiang University</strong>,
+          interested in computer vision, generative models, visual tokenization,
+          and intelligent robotics.
+        </p>
+        <div class="link-row" aria-label="Profile links">
+          <a class="button primary" href="mailto:3240100500@zju.edu.cn">Email</a>
+          <a class="button" href="https://github.com/LCGLiChenge">GitHub</a>
+          <!-- Add CV and Google Scholar buttons here when those links are ready. -->
         </div>
-        
-    </div>
-    <script>
-        const scrollToMain = ()=> {
-            console.log('scroll');
-            const target = document.querySelector('.main-content-container');
-            target.scrollIntoView({ behavior: 'smooth'});
-        }
-    </script>
-</div>
-	
+      </div>
 
-	<div class="main-content-container flex flex-col justify-between min-h-dvh">
-		<div class="main-content-header">
-			<header class="navbar-container px-6 md:px-12">
-    <div class="navbar-content transition-navbar has-home-banner">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                <h1>
-                Chloe&#39;s Cabin
-                </h1>
-            </a>
-        </div>
+      <aside class="fact-card" aria-label="Academic highlights">
+        <dl class="facts">
+          <div>
+            <dt>Program</dt>
+            <dd>Robotics Engineering</dd>
+          </div>
+          <div>
+            <dt>Current Focus</dt>
+            <dd>Visual Tokenization &amp; Generation</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
 
-        <div class="right">
-            <!-- PC -->
-            <div class="desktop">
-                <ul class="navbar-list">
-                    
-                        
-                            
+    <section id="about" aria-labelledby="about-heading">
+      <div class="section-label">
+        <p class="eyebrow">01 · Profile</p>
+        <h2 id="about-heading">About</h2>
+      </div>
+      <div>
+        <p class="body-copy">
+          I am an undergraduate student in Robotics Engineering at Zhejiang University,
+          enrolled in 2024. My research interests sit at the
+          intersection of visual representation learning and generative modeling. I am
+          particularly curious about how compact, expressive visual tokens can support
+          both high-fidelity reconstruction and image generation, with potential connections
+          to embodied intelligence and robotics.
+        </p>
+      </div>
+    </section>
 
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class="active"
-                                   href="/"
-                                        >
-                                    <i class="fa-regular fa-house fa-fw"></i>
-                                    HOME
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/bookmarks/"
-                                        >
-                                    <i class="fa-regular fa-lightbulb fa-fw"></i>
-                                    NOTES
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                    
-                </ul>
-            </div>
-            <!-- Mobile -->
-            <div class="mobile">
-                
-                <div class="icon-item navbar-bar">
-                    <div class="navbar-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile sheet -->
-    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
-        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
-                           href="/"
-                        >
-                            <span>
-                                HOME
-                            </span>
-                            
-                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/bookmarks/"
-                        >
-                            <span>
-                                NOTES
-                            </span>
-                            
-                                <i class="fa-regular fa-lightbulb fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-
-            
-            
-                
-                    
-            
+    <section id="interests" aria-labelledby="interests-heading">
+      <div class="section-label">
+        <p class="eyebrow">02 · Focus</p>
+        <h2 id="interests-heading">Research Interests</h2>
+      </div>
+      <div>
+        <p class="body-copy">
+          I am interested in learning expressive visual representations and using them
+          to build capable generative systems. My current focus is visual tokenization
+          for image reconstruction and generation; in the longer term, I hope to explore
+          how these ideas can contribute to perception and learning in robotics.
+        </p>
+        <ul class="interest-list" aria-label="Research interests">
+          <li>Computer Vision</li>
+          <li>Image Generation</li>
+          <li>Generative Models</li>
+          <li>Visual Tokenization</li>
+          <li>Robotics</li>
         </ul>
-
-        <div class="statistics flex justify-around my-2.5">
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
-        <div class="label text-third-text-color text-sm">Tags</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
-        <div class="label text-third-text-color text-sm">Categories</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
-        <div class="label text-third-text-color text-sm">Posts</div>
-    </a>
-</div>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-		</div>
-
-		<div class="main-content-body transition-fade-up">
-			
-			<div class="home-sidebar-container">
-    <div class="sticky-container sticky">
-        
-        
-            
-                <div class="sidebar-links">
-                    <div class="site-info">
-                        <div class="site-name">Chloe&#39;s Cabin</div>
-                        
-                    </div>
-                    
-                        
-                            
-                                <a class="links" href="/bookmarks/">
-                                    
-                                        <i class="fa-regular fa-lightbulb icon-space"></i>
-                                    
-                                    <span class="link-name">Notes</span>
-                                </a>
-                            
-                        
-                    
-                </div>
-            
-            <div class="sidebar-content"  marginTop >
-                <div class="avatar flex justify-center">
-    <img src="/images/leftleft.jpg">
-</div>
-                <div class="author flex flex-col justify-center my-2.5 mx-0">
-    <div class="name">Chloe</div>
-    
-        <div class="label">Lv1</div>
-    
-</div>
-                <div class="statistics flex justify-around my-2.5">
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
-        <div class="label text-third-text-color text-sm">Tags</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
-        <div class="label text-third-text-color text-sm">Categories</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
-        <div class="label text-third-text-color text-sm">Posts</div>
-    </a>
-</div>
-            </div>
-        
-
-    </div>
-</div>
-
-			
-
-			<div class="main-content">
-				<div class="home-content-container">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/12/09/page-5/">
-                            Flow matching and Diffusion Models4
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            DiffusionModels4
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 09 2025 20:49:41 GMT+0800">
-                
-                    2025-12-09
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/12/09/page-5/">Read more<span class="seo-reader-text">Flow matching and Diffusion Models4</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/12/08/page-3/">
-                            Flow matching and Diffusion Models3
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            DiffusionModels3
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Dec 08 2025 21:12:41 GMT+0800">
-                
-                    2025-12-08
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/12/08/page-3/">Read more<span class="seo-reader-text">Flow matching and Diffusion Models3</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/11/27/page-2/">
-                            Flow matching and Diffusion Models1
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            DiffusionModels1
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Nov 27 2025 20:49:41 GMT+0800">
-                
-                    2025-11-27
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/11/27/page-2/">Read more<span class="seo-reader-text">Flow matching and Diffusion Models1</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/11/27/page-4/">
-                            Flow matching and Diffusion Models2
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            DiffusionModels2
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Nov 27 2025 20:49:41 GMT+0800">
-                
-                    2025-11-27
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/11/27/page-4/">Read more<span class="seo-reader-text">Flow matching and Diffusion Models2</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/11/25/page-1/">
-                            UCB CS61B lecture1(Basic knowledge of Java)
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            Lecture1
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Nov 25 2025 12:57:51 GMT+0800">
-                
-                    2025-11-25
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/11/25/page-1/">Read more<span class="seo-reader-text">UCB CS61B lecture1(Basic knowledge of Java)</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/11/24/page/">
-                            Mathematical principle of Transformer
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                             Transformer
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Nov 24 2025 19:18:46 GMT+0800">
-                
-                    2025-11-24
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2025/11/24/page/">Read more<span class="seo-reader-text">Mathematical principle of Transformer</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-    </ul>
-
-    <div class="home-paginator px-7 py-5">
-        <div class="paginator">
-	<span class="page-number current">1</span>
-</div>
-  
-    </div>
-</div>
-
-			</div>
-
-			
-		</div>
-
-		<div class="main-content-footer">
-			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
-    <div class="info-container py-3 text-center">
-        
-        <div class="text-center">
-            &copy;
-            
-              <span>2022</span>
-              -
-            
-            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Chloe</a>
-            
-                
-                <p class="post-count space-x-0.5">
-                    <span>
-                        6 posts in total
-                    </span>
-                    
-                </p>
-            
-        </div>
-        
-            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
-            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
-                
-                    <span id="busuanzi_container_site_uv" class="lg:!block">
-                        <span class="text-sm">VISITOR COUNT</span>
-                        <span id="busuanzi_value_site_uv"></span>
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv" class="lg:!block">
-                        <span class="text-sm">TOTAL PAGE VIEWS</span>
-                        <span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
-            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
-        </div>
-        
-        
-            <div>
-                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
-            </div>
-        
-        
-            <script data-swup-reload-script>
-                try {
-                    function odometer_init() {
-                    const elements = document.querySelectorAll('.odometer');
-                    elements.forEach(el => {
-                        new Odometer({
-                            el,
-                            format: '( ddd).dd',
-                            duration: 200
-                        });
-                    });
-                    }
-                    odometer_init();
-                } catch (error) {}
-            </script>
-        
-        
-        
-    </div>  
-</footer>
-		</div>
-	</div>
-
-	
-
-	<div class="right-side-tools-container">
-		<div class="side-tools-container">
-	<ul class="hidden-tools-list">
-		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
-			<i class="fa-regular fa-magnifying-glass-plus"></i>
-		</li>
-
-		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
-			<i class="fa-regular fa-magnifying-glass-minus"></i>
-		</li>
-
-		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
-			<i class="fa-regular fa-moon"></i>
-		</li>
-
-		<!-- rss -->
-		
-
-		
-
-		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
-			<i class="fa-regular fa-arrow-down"></i>
-		</li>
-	</ul>
-
-	<ul class="visible-tools-list">
-		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
-			<i class="fa-regular fa-cog fa-spin"></i>
-		</li>
-		
-		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
-			<i class="arrow-up fas fa-arrow-up"></i>
-			<span class="percent"></span>
-		</li>
-		
-		
-	</ul>
-</div>
-	</div>
-
-	<div class="image-viewer-container">
-	<img src="">
-</div>
-
-	
-
-</main>
-
-
-
-<script src="/js/build/libs/Swup.min.js"></script>
-
-<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
-
-<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
-
-<script>
-    const swup = new Swup({
-        plugins: [
-            new SwupScriptsPlugin({
-                optin: true,
-            }),
-            new SwupProgressPlugin(),
-            new SwupScrollPlugin({
-                offset: 80,
-            }),
-            new SwupSlideTheme({
-                mainElement: ".main-content-body",
-            }),
-            new SwupPreloadPlugin(),
-        ],
-        containers: ["#swup"],
-    });
-</script>
-
-
-
-
-	
-<script src="/js/build/tools/imageViewer.js" type="module"></script>
-
-<script src="/js/build/utils.js" type="module"></script>
-
-<script src="/js/build/main.js" type="module"></script>
-
-<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
-
-<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
-
-<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
-
-<script src="/js/build/layouts/categoryList.js" type="module"></script>
-
-
-
-
-
-    
-<script src="/js/build/tools/codeBlock.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/layouts/lazyload.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/runtime.js"></script>
-
-    
-<script src="/js/build/libs/odometer.min.js"></script>
-
-    
-<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
-
-
-
-
-  
-<script src="/js/build/libs/Typed.min.js"></script>
-
-  
-<script src="/js/build/plugins/typed.js" type="module"></script>
-
-
-
-
-
-
-
-
-    
-<script src="/js/build/libs/anime.min.js"></script>
-
-
-
-
-
-    
-<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
-
-
-<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-
-    
-<script src="/js/build/layouts/bookmarkNav.js" type="module"></script>
-
-
-	
+      </div>
+    </section>
+
+    <section id="honors" aria-labelledby="honors-heading">
+      <div class="section-label">
+        <p class="eyebrow">03 · Recognition</p>
+        <h2 id="honors-heading">Honors</h2>
+      </div>
+      <ul class="honors-list">
+        <li>
+          <span class="honor-year">2024–2025</span>
+          <div>
+            <h3>National Scholarship (China)</h3>
+            <p>National-level recognition for outstanding academic performance.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="education" aria-labelledby="education-heading">
+      <div class="section-label">
+        <p class="eyebrow">04 · Background</p>
+        <h2 id="education-heading">Education</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <time datetime="2024">2024–Present</time>
+          <div>
+            <h3>Zhejiang University</h3>
+            <p>B.Eng. candidate in Robotics Engineering · Undergraduate</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <div class="section-label">
+        <p class="eyebrow">05 · Connect</p>
+        <h2 id="contact-heading">Contact</h2>
+      </div>
+      <div class="contact-panel">
+        <h3>Let's talk about research.</h3>
+        <p>
+          I welcome conversations about computer vision, generative models, visual
+          tokenization, and robotics. The best way to reach me is by email.
+        </p>
+        <p>
+          <a href="mailto:3240100500@zju.edu.cn">3240100500@zju.edu.cn</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/LCGLiChenge">GitHub</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year">2026</span> Chenge Li</p>
+    <p>Built as a lightweight, accessible academic homepage.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
-
 </html>

@@ -460,7 +460,7 @@
         min-height: 4rem;
       }
 
-      .nav-links li:not(:first-child):not(:last-child) {
+      .nav-links li:not(:first-child):not(:nth-child(3)):not(:last-child) {
         display: none;
       }
 
@@ -567,6 +567,7 @@
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#interests">Interests</a></li>
+        <li><a href="#publications">Publications</a></li>
         <li><a href="#honors">Honors</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -641,9 +642,37 @@
       </div>
     </section>
 
+    <section id="publications" aria-labelledby="publications-heading">
+      <div class="section-label">
+        <p class="eyebrow">03 · Research</p>
+        <h2 id="publications-heading">Publications</h2>
+      </div>
+      <article class="project-card" aria-labelledby="mixtok-title">
+        <span class="status">arXiv preprint · 2026</span>
+        <h3 id="mixtok-title">
+          <a href="https://lcglichenge.github.io/MixTok-page/">MixTok: Adaptive Visual Tokenization with Global 1D Tokens and Sparse 2D Refinement</a>
+        </h3>
+        <p class="project-meta">
+          <strong>Chenge Li*</strong>, Yefei He*, Xinyu Liu, Feng Chen, Hong Zhou, Bohan Zhuang
+          <br>* Equal contribution
+        </p>
+        <p>
+          MixTok combines compact global 1D tokens with content-adaptive sparse 2D
+          refinement, allocating local detail where it is needed for efficient image
+          reconstruction and generation.
+        </p>
+        <div class="link-row" aria-label="MixTok resources">
+          <a class="button primary" href="https://lcglichenge.github.io/MixTok-page/">Project Page</a>
+          <a class="button" href="https://arxiv.org/abs/2610.13181">Paper</a>
+          <a class="button" href="https://github.com/LCGLiChenge/MixTok">Code</a>
+          <a class="button" href="https://huggingface.co/Chloeeeeeeee123/MixTok">Models</a>
+        </div>
+      </article>
+    </section>
+
     <section id="honors" aria-labelledby="honors-heading">
       <div class="section-label">
-        <p class="eyebrow">03 · Recognition</p>
+        <p class="eyebrow">04 · Recognition</p>
         <h2 id="honors-heading">Honors</h2>
       </div>
       <ul class="honors-list">
@@ -659,7 +688,7 @@
 
     <section id="education" aria-labelledby="education-heading">
       <div class="section-label">
-        <p class="eyebrow">04 · Background</p>
+        <p class="eyebrow">05 · Background</p>
         <h2 id="education-heading">Education</h2>
       </div>
       <ol class="timeline">
@@ -675,7 +704,7 @@
 
     <section id="contact" aria-labelledby="contact-heading">
       <div class="section-label">
-        <p class="eyebrow">05 · Connect</p>
+        <p class="eyebrow">06 · Connect</p>
         <h2 id="contact-heading">Contact</h2>
       </div>
       <div class="contact-panel">

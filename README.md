@@ -4,7 +4,7 @@ A lightweight, single-page academic homepage for Chenge Li, a Zhejiang Universit
 
 ## 1. Current content
 
-The page has been personalized with the name **Chenge Li**, Zhejiang University email, GitHub profile, and 2024–2025 National Scholarship. Unpublished project details and optional academic metrics have intentionally been omitted.
+The page has been personalized with the name **Chenge Li**, Zhejiang University email, GitHub profile, and 2024–2025 National Scholarship. The Publications section features the MixTok arXiv preprint, with links to its project page, paper, code, and models. Unpublished project details and optional academic metrics have intentionally been omitted.
 
 ## 2. Optional links
 
